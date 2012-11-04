@@ -61,10 +61,7 @@ public final class Player
         float head_cos = FloatMath.cos( head_rad );
         float amount_rot = rot * head_cos + pit * head_sin;
         float amount_pit = pit * head_cos - rot * head_sin;
-        model__.setOrientation( q_from_euler( heading__, amount_rot, amount_pit ) );
-        //Quaternion quat = new Quaternion();
-        //quat.fromEuler( heading__, amount_rot, amount_pit );
-        //model__.setOrientation( quat );
+        model__.setOrientation( (new Quaternion()).fromEuler( heading__, amount_rot, amount_pit ) );
         
         // @todo This function should not be linear - fix it! 
         speed__ += pit / 1500.0f;
@@ -79,25 +76,5 @@ public final class Player
     public BaseObject3D getObject()
     {
         return model__;
-    }
-    
-    public Quaternion q_from_euler(final float heading, final float attitude, final float bank)
-    {
-        float x = MathUtil.degreesToRadians(heading);
-        float y = MathUtil.degreesToRadians(attitude);
-        float z = MathUtil.degreesToRadians(bank);
-        float c1 = FloatMath.cos(x/2);
-        float s1 = FloatMath.sin(x/2);
-        float c2 = FloatMath.cos(y/2);
-        float s2 = FloatMath.sin(y/2);
-        float c3 = FloatMath.cos(z/2);
-        float s3 = FloatMath.sin(z/2);
-        float c1c2 = c1*c2;
-        float s1s2 = s1*s2;
-        float w1 =c1c2*c3 - s1s2*s3;
-        float x1 =c1c2*s3 + s1s2*c3;
-        float y1 =s1*c2*c3 + c1*s2*s3;
-        float z1 =c1*s2*c3 - s1*c2*s3;
-        return new Quaternion( w1, x1, y1, z1 );
     }
 }
